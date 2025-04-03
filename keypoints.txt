@@ -1,0 +1,45 @@
+*REQUISITOS CLAVE DEL SISTEMA*
+
++ Usuarios: gestionar registro, auth y perfiles
+    - registro con nombre, email, etc.
+    - auth con JWT
+    - perfil con nombre, avatar¿?, exp level, badges, historial de misiones
+
++ Misiones: crear y gestionar misiones para los Usuarios
+    - CRUD (Create, Read, Update, Delete)
+    - cada mision tiene titulo, descr, estado, ptos o reward asociado, condiciones
+
++ Integracion con APIs: obtener informacion y actualizar estado de misiones
+    - version inicial: mockear datos con JSON
+    - version real: conectar con APIs para obtener datos
+
++ Sistema de Recompensas: asignar badges y exp points a los usuarios según sus logros
+    - definir sistema de reglas para desbloquear badges
+    - guardar badges obtenidos en perfil del usuario
+    - mostrar badges disponibles
+
++ Notificaciones: informar al usuario de sus avances en la plataforma
+    - a traves de player site: notif en tiempo real en una parte de la plataforma
+    - a traves de slack: webhooks con bot para enviar msg
+
+
+
+*ELECCIÓN DE TECNOLOGÍAS*
+
++ BACKEND (API + Logica de negocio):
+    - Mas chance --> Django REST Framework
+    - Otra: NodeJS + NestJS
+
++ BASE DE DATOS:
+    - PostgreSQL (escalable y soporta JSON)
+
++ INTEGRACION CON APIS:
+    - 
+
++ FRONTEND:
+    - React: flexible, mucha comunidad
+    - Vue.js: simple y reactivo
+
++ SLACK:
+    - Webhooks de Slack
+    - Slack API (OAuth)

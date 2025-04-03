@@ -1,0 +1,15 @@
+Como voy a usar Django + DRF (django rest framework) para desarrollar voy a apuntar aqui la
+instalacion que debo realizar tanto del entorno como del framework.
+
+En primer lugar voy a crear un entorno virtual con venv, para no instalar todo en el local.
+    Genero con  --> PS python -m venv venv
+                    PS venv\Scripts\Activate
+
+Ahora una vez que dispongo del entorno virtual, instalo Django (la version actual es 5.2,
+la cual va a ser LTS hasta 2028/2029)
+    Genero con  --> PS py -m pip install Django==5.2
+                    PS mkdir djangotuto
+                    PS django-admin startproject mysite djangotuto
+
+Los comandos anteriores instalan Django y además crean una carpeta para testear un primer
+proyecto básico que puede ayudar al entendimiento del entorno.
