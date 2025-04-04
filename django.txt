@@ -13,3 +13,4 @@ la cual va a ser LTS hasta 2028/2029)
 
 Los comandos anteriores instalan Django y además crean una carpeta para testear un primer
 proyecto básico que puede ayudar al entendimiento del entorno.
+

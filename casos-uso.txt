@@ -1,0 +1,7 @@
+Aqui recojo las posibles acciones de uso que quiero implementar en la app:
+    + Entrar a la web y registrar usuario
+    + Entrar a la web y crear una mision
+    + Introducir datos de github (mock primero, reales despues) y actualizar mision
+    + Completar mision y entregar badge a usuario
+    + Barras de progreso para ver estado actual hasta conseguir proximo badge
+    + Nivel de XP con progresion ¿logaritmica?
