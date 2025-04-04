@@ -3,7 +3,7 @@
 + Usuarios: gestionar registro, auth y perfiles
     - registro con nombre, email, etc.
     - auth con JWT
-    - perfil con nombre, avatar¿?, exp level, badges, historial de misiones
+    - perfil con nombre, avatar¿?, xp level, badges, historial de misiones
 
 + Misiones: crear y gestionar misiones para los Usuarios
     - CRUD (Create, Read, Update, Delete)
@@ -19,10 +19,10 @@
     - mostrar badges disponibles
 
 + Notificaciones: informar al usuario de sus avances en la plataforma
-    - a traves de player site: notif en tiempo real en una parte de la plataforma
+    - a traves del player site: notif en tiempo real en una parte de la plataforma
     - a traves de slack: webhooks con bot para enviar msg
 
-
+------------------------------------------------------------------------------------------------
 
 *ELECCIÓN DE TECNOLOGÍAS*
 

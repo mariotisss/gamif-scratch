@@ -12,5 +12,10 @@ la cual va a ser LTS hasta 2028/2029)
                     PS django-admin startproject mysite djangotuto
 
 Los comandos anteriores instalan Django y además crean una carpeta para testear un primer
-proyecto básico que puede ayudar al entendimiento del entorno.
+proyecto básico que puede ayudar al entendimiento del entorno. Además, he añadido una imagen
+que ayuda a entender el funcionamiento basico del Framework.
+https://otosection.com/the-django-framework-explained/
 
+-----------------------------------------------------------------------------------------------
+
+Ahora, para comenzar a crear el 
