@@ -1,0 +1,81 @@
+# Entorno virtual
+venv/
+.env
+
+# Archivos de Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Archivos de logs y temporales
+*.log
+*.pot
+*.mo
+*.sqlite3
+*.db
+*.tmp
+*.swp
+
+# Archivos de configuración de entorno/local
+.env
+*.env
+.env.*
+
+# Archivos de Django
+*.pyc
+*.sqlite3
+db.sqlite3
+
+# Django migrations
+**/migrations/**/__pycache__/
+**/migrations/**/*.py[cod]
+**/migrations/**/migrations/*.py
+
+# Archivos de compilación
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+
+# Configuración de IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Docker
+*.pid
+*.pid.lock
+docker-compose.override.yml
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Coverage y testing
+htmlcov/
+.coverage
+.tox/
+.nox/
+.pytest_cache/
+coverage.xml
+nosetests.xml
+test-results.xml
+*.cover
+.hypothesis/
+
+# Configuración de Postgres local
+*.pgsql
+*.psql
+
+# Archivos generados por pip
+pip-log.txt
+pip-delete-this-directory.txt
