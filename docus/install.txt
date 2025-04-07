@@ -1,0 +1,14 @@
+Para instalar este proyecto inicialmente (al no tener docker todavia)
+he decidido hacerlo manualmente. Por lo que, hay que seguir estos pasos:
+
+1. Crear y habilitar entorno virtual de ejecución:
+    PS python -m venv venv
+    PS venv\Scripts\activate (si no esta habilitada la ejecucion de Scripts, hacerlo)
+
+2. Instalar dependencias haciendo uso del requirements
+    PS pip install -r requirements.txt
+
+3. Verificar que Django esta accesible
+    PS python manage.py runserver
+
+4. Si el servidor se levanta correctamente, todo deberia estar ya configurado.

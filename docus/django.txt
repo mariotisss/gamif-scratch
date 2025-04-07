@@ -6,7 +6,7 @@ En primer lugar voy a crear un entorno virtual con venv, para no instalar todo e
                     PS venv\Scripts\Activate
 
 Ahora una vez que dispongo del entorno virtual, instalo Django (la version actual es 5.2,
-la cual va a ser LTS hasta 2028/2029)
+la cual va a ser LTS hasta 2028/2029).
     Genero con  --> PS py -m pip install Django==5.2
                     PS mkdir djangotuto
                     PS django-admin startproject mysite djangotuto
@@ -18,4 +18,11 @@ https://otosection.com/the-django-framework-explained/
 
 -----------------------------------------------------------------------------------------------
 
-Ahora, para comenzar a crear el 
+Ahora, para comenzar a crear el creo el proyecto y los primeros modulos que voy a probar.
+    Genero con -->  PS django-admin startproject gamification_project .
+                    PS python manage.py startapp users
+                    PS python manage.py startapp missions
+                    PS python manage.py startapp badges
+
+    Para JWT   -->  PS pip install djangorestframework djangorestframework-simplejwt
+
