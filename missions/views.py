@@ -19,6 +19,7 @@ class MissionViewSet(viewsets.ModelViewSet):
     serializer_class = MissionSerializer
     permission_classes = [IsAdminOrReadOnly]
 
+
 class CompleteMissionView(APIView):
     permission_classes = [IsAuthenticated]
 

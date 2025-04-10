@@ -24,7 +24,7 @@ class CompleteMissionSerializer(serializers.Serializer):
         mission = Mission.objects.get(id=validated_data['mission_id'])
 
         if UserMission.objects.filter(user=user, mission=mission).exists():
-            raise serializers.ValidationError("Ya has completado esta misión.")
+            raise serializers.ValidationError("Ya has completado esta mision.")
 
         UserMission.objects.create(user=user, mission=mission)
         user.xp += mission.xp_reward
