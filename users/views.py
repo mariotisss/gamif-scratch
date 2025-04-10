@@ -12,15 +12,15 @@ User = get_user_model()
 
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
-    permission_classes = (AllowAny,)
+    permission_classes = (AllowAny,) # Cualquier usuario puede registrarse
     serializer_class = RegisterSerializer
 
 class UserMeView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated] # Login con token JWT
 
     def get(self, request):
         user = request.user
-        return Response({
+        return Response({ # Info del usuario logueado
             "id": user.id,
             "username": user.username,
             "email": user.email,

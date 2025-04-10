@@ -5,7 +5,7 @@ class Mission(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
     xp_reward = models.PositiveIntegerField(default=0)
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=True)   # Si la misión esta disponible o no
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -17,7 +17,7 @@ class UserMission(models.Model):
     completed_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ('user', 'mission')  # evitar duplicados
+        unique_together = ('user', 'mission')  # Evita repetir la misma misión para el mismo usuario
 
     def __str__(self):
         return f"{self.user.username} -> {self.mission.title}"

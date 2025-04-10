@@ -17,7 +17,7 @@ class IsAdminOrReadOnly(permissions.BasePermission):
 class MissionViewSet(viewsets.ModelViewSet):
     queryset = Mission.objects.all()
     serializer_class = MissionSerializer
-    permission_classes = [IsAdminOrReadOnly]
+    permission_classes = [IsAdminOrReadOnly] # Admin: crear/editar; Resto: ver
 
 
 class CompleteMissionView(APIView):
@@ -26,6 +26,6 @@ class CompleteMissionView(APIView):
     def post(self, request):
         serializer = CompleteMissionSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
-            result = serializer.save()
+            result = serializer.save()  # Completa la misión y actualiza XP
             return Response(result, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
