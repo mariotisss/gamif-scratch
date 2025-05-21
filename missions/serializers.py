@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from .models import Mission, UserMission
 from django.contrib.auth import get_user_model
+from gamification_project.utils.levels import user_level_from_xp
+
 
 User = get_user_model()
 
@@ -21,7 +23,7 @@ class CompleteMissionSerializer(serializers.Serializer):
         return value
 
     def create(self, validated_data):
-        user = self.context['request'].user     # Usuario autenticado
+        user = self.context['request'].user
         mission = Mission.objects.get(id=validated_data['mission_id'])
 
         if UserMission.objects.filter(user=user, mission=mission).exists():
@@ -30,9 +32,11 @@ class CompleteMissionSerializer(serializers.Serializer):
         # Registrar misión como completada y otorgar XP
         UserMission.objects.create(user=user, mission=mission)
         user.xp += mission.xp_reward
+        user.level = user_level_from_xp(user.xp)  # Nuevo cálculo de nivel
         user.save()
 
         return {
             "message": "Mision completada",
-            "new_xp": user.xp
+            "new_xp": user.xp,
+            "new_level": user.level
         }
