@@ -55,7 +55,8 @@ INSTALLED_APPS = [
     'users',
     'missions',
     'badges',
-    'copilot_metrics'
+    'copilot_metrics',
+    'teams'
 ]
 
 MIDDLEWARE = [
