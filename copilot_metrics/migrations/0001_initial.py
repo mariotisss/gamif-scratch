@@ -31,7 +31,9 @@ class Migration(migrations.Migration):
                 ('total_active_users', models.PositiveIntegerField()),
                 ('total_engaged_users', models.PositiveIntegerField()),
                 ('engagement_rate', models.FloatField(help_text='Ratio of engaged to active users (0.0 to 1.0)')),
-                ('team', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='copilot_metrics.team')),
+                ('team', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='teams.team')),
+                # Tuve que modificar el nombre del modelo a 'teams.team' para que coincida con el nombre del modelo en teams/models.py
+                # ya que 'copilot_metrics.team' no existe en el contexto de este archivo.
             ],
             options={
                 'ordering': ['-date'],

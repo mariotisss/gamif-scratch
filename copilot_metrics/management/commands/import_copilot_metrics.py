@@ -1,7 +1,8 @@
 import csv
 from datetime import datetime
 from django.core.management.base import BaseCommand
-from copilot_metrics.models import Team, CopilotEngagementMetric
+from teams.models import Team
+from copilot_metrics.models import CopilotEngagementMetric
 
 class Command(BaseCommand):
     help = "Import Copilot engagement metrics from a CSV-file"
