@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'users',
     'missions',
     'badges',
+    'copilot_metrics'
 ]
 
 MIDDLEWARE = [
@@ -114,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-        "OPTIONS": {"min_length": 8}, # Aqui valido la longitud minima de la password
+        "OPTIONS": {"min_length": 6}, # Aqui valido la longitud minima de la password
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
