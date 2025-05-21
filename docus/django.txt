@@ -18,11 +18,46 @@ https://otosection.com/the-django-framework-explained/
 
 -----------------------------------------------------------------------------------------------
 
-Ahora, para comenzar a crear el creo el proyecto y los primeros modulos que voy a probar.
+Ahora, para comenzar inicializo el proyecto y los primeros modulos que voy a probar.
     Genero con -->  PS django-admin startproject gamification_project .
                     PS python manage.py startapp users
                     PS python manage.py startapp missions
                     PS python manage.py startapp badges
 
     Para JWT   -->  PS pip install djangorestframework djangorestframework-simplejwt
+
+    Además, hay que añadir dentro de gamification_project/settings.py las apps instaladas:
+                    INSTALLED_APPS = [
+                        ...
+                        'users',
+                        'missions',
+                        'badges',
+                        ...
+                    ]
+
+Dentro de cada "app" voy añadiendo:
+    1. Models: los modelos de datos que usará el proyecto. Importante hacer las migraciones después de crearlos.
+               -->  PS python manage.py makemigrations 'module_name.py'
+                    PS python manage.py migrate
+    2. Serializers: se agregan manualmente. Formatear lo que se envía y recibe en raw en el body de los mensajes.
+    3. Urls: endpoints usados para cada módulo. Tener en cuenta los endpoints base de "gamification_project/urls.py"
+    4. Views: acoplar los serializers a los endpoints definidos.
+    5. Tests: se crean tests básicos por app, usando pytest. Para mejor organización, se crean subfolders en cada
+    módulo. Se testea la creación de usuarios, auth JWT, creación y finalización de misiones, obtención de badges, etc.
+
+Para evitar hardcodear datos sensibles, uso 'django-environ' para gestionar variables de entorno (BD, JWT secret,
+debug mode), y configuro settings.py para leerlas.
+                    env = environ.Env()
+                    environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+                    
+                    DATABASES = {
+                        'default': {
+                            'ENGINE': 'django.db.backends.postgresql',
+                            'NAME': env('DB_NAME'),
+                            'USER': env('DB_USER'),
+                            'PASSWORD': env('DB_PASSWORD'),
+                            'HOST': env('DB_HOST'),
+                            'PORT': env('DB_PORT'),
+                        }
+                    }
 
