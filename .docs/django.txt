@@ -47,7 +47,7 @@ Dentro de cada "app" voy añadiendo:
 
 Para evitar hardcodear datos sensibles, uso 'django-environ' para gestionar variables de entorno (BD, JWT secret,
 debug mode), y configuro settings.py para leerlas.
-                    env = environ.Env()
+               -->  env = environ.Env()
                     environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
                     
                     DATABASES = {
