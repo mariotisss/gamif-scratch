@@ -23,4 +23,5 @@ urlpatterns = [
     path('api/missions/', include('missions.urls')),  # App de missions
     path('api/', include('badges.urls')),  # App de badges
     path('api/', include('teams.urls')), # App de teams
+    path('api/', include('analytics.urls')),  # App de analytics
 ]

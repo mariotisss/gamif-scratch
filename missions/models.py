@@ -14,7 +14,7 @@ class Mission(models.Model):
 class UserMission(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     mission = models.ForeignKey(Mission, on_delete=models.CASCADE)
-    completed_at = models.DateTimeField(auto_now_add=True)
+    completed_at = models.DateTimeField(auto_now_add=True) # Fecha de finalización de la misión
 
     class Meta:
         unique_together = ('user', 'mission')  # Evita repetir la misma misión para el mismo usuario
