@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Mission, UserMission
 from django.contrib.auth import get_user_model
 from gamification_project.utils.levels import user_level_from_xp
+from analytics.models import Notification
 
 
 User = get_user_model()
@@ -29,11 +30,24 @@ class CompleteMissionSerializer(serializers.Serializer):
         if UserMission.objects.filter(user=user, mission=mission).exists():
             raise serializers.ValidationError("Ya has completado esta mision.")
 
-        # Registrar misión como completada y otorgar XP
+        # Registrar misión como completada, otorgar XP y actualizar nivel
+        # En caso de subir nivel, crear notificación
         UserMission.objects.create(user=user, mission=mission)
         user.xp += mission.xp_reward
-        user.level = user_level_from_xp(user.xp)  # Nuevo cálculo de nivel
+
+        old_level = user.level  # Se almacena nivel previo
+        new_level = user_level_from_xp(user.xp)  # Nuevo cálculo de nivel
+        user.level = new_level
         user.save()
+
+        # Si subió de nivel, creamos notificación
+        if new_level > old_level:
+            Notification.objects.create(
+                user=user,
+                type='leveled_up',
+                message=f"Awesome! You leveled up to level {new_level}.",
+                related_object_id=None
+            )
 
         return {
             "message": "Mision completada",

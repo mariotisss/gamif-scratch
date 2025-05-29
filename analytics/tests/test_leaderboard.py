@@ -22,7 +22,7 @@ def test_leaderboard():
 
     # Asignamos el mismo badge dos veces para simular múltiples premios
     UserBadge.objects.create(user=user1, badge=badge1)
-    UserBadge.objects.create(user=user1, badge=badge1)  # intencionalmente duplicado
+    UserBadge.objects.create(user=user2, badge=badge1)  # intencionalmente duplicado
 
     client = APIClient()
     response = client.get("/api/leaderboard/")

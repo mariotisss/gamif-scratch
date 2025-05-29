@@ -5,6 +5,9 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django.contrib.auth import get_user_model
 from teams.models import UserTeam
 from rest_framework import status
+from rest_framework import viewsets, permissions
+from .models import Notification
+from .serializers import NotificationSerializer
 
 User = get_user_model()
 
@@ -33,3 +36,10 @@ class LeaderboardView(APIView):
         ]
         return Response(data, status=status.HTTP_200_OK)
 
+
+class NotificationViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = NotificationSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Notification.objects.filter(user=self.request.user).order_by('-created_at')
