@@ -2,12 +2,14 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.exceptions import NotFound
 from django.contrib.auth import get_user_model
 from teams.models import UserTeam
 from rest_framework import status
 from rest_framework import viewsets, permissions
 from .models import Notification
 from .serializers import NotificationSerializer
+
 
 User = get_user_model()
 
@@ -37,9 +39,18 @@ class LeaderboardView(APIView):
         return Response(data, status=status.HTTP_200_OK)
 
 
-class NotificationViewSet(viewsets.ReadOnlyModelViewSet):
+class NotificationViewSet(viewsets.ModelViewSet):
     serializer_class = NotificationSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         return Notification.objects.filter(user=self.request.user).order_by('-created_at')
+    
+    # Hay que pasar una instancia de usuario al crear una notificacion
+    def perform_create(self, serializer):
+        user_id = self.request.data.get("user")
+        try:
+            user_instance = User.objects.get(id=user_id)
+        except User.DoesNotExist:
+            raise NotFound("User not found.")
+        serializer.save(user=user_instance)

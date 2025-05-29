@@ -1,9 +1,13 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from .views import LeaderboardView, NotificationViewSet
 
+router = DefaultRouter()
+router.register(r'notifications', NotificationViewSet, basename='notification')
+
 urlpatterns = [
+    path('', include(router.urls)),
     path('leaderboard/', LeaderboardView.as_view(), name='leaderboard'),
-    path('notifications/', NotificationViewSet.as_view({'get': 'list'}), name='notification'),
 ]
 
 
