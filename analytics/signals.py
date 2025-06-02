@@ -6,7 +6,7 @@ from .models import Notification
 
 @receiver(post_save, sender=UserMission)
 def on_mission_completed(sender, instance, created, **kwargs):
-    if created and instance.completed:
+    if created and instance.completed_at:
         Notification.objects.create(
             user=instance.user,
             type='mission_completed',

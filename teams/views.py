@@ -10,7 +10,8 @@ class TeamViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly] # No autenticados solo pueden leer
 
 # Listar las relaciones UserTeam del usuario autenticado
-class UserTeamViewSet(viewsets.ReadOnlyModelViewSet):
+class UserTeamViewSet(viewsets.ModelViewSet):
+    queryset = UserTeam.objects.all()
     serializer_class = UserTeamSerializer
     permission_classes = [permissions.IsAuthenticated] 
 
