@@ -6,6 +6,7 @@ class Notification(models.Model):
         ('mission_completed', 'Mission Completed'),
         ('badge_earned', 'Badge Earned'),
         ('leveled_up', 'Leveled Up'),
+        ('info', 'Admin Info'),
     ]
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='notifications')
