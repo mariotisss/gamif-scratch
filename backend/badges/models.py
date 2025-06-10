@@ -8,8 +8,12 @@ class Badge(models.Model):
     name = models.CharField(max_length=100, unique=True)
     description = models.TextField()
     icon = models.ImageField(upload_to='badges/', blank=True, null=True)
-    condition_code = models.CharField(max_length=100, help_text="Codigo de condicion para desbloqueo (para logica interna)")
+    condition_code = models.CharField(max_length=100, unique=True, help_text="Codigo de condicion para desbloqueo (para logica interna)")
     created_at = models.DateTimeField(auto_now_add=True)
+
+    condition_expression = models.TextField(
+        help_text="Expresión Python evaluable: ejemplo 'level >= 5 or missions_completed >= 10'"
+    )
 
     def __str__(self):
         return self.name

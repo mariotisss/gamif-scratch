@@ -3,6 +3,7 @@ from .models import Mission, UserMission
 from django.contrib.auth import get_user_model
 from gamification_project.utils.levels import user_level_from_xp
 from analytics.models import Notification
+from badges.utils import evaluate_dynamic_badges
 
 
 User = get_user_model()
@@ -39,6 +40,9 @@ class CompleteMissionSerializer(serializers.Serializer):
         new_level = user_level_from_xp(user.xp)  # Nuevo cálculo de nivel
         user.level = new_level
         user.save()
+
+        # Evaluar medallas dinamicamente
+        evaluate_dynamic_badges(user)
 
         # Si subió de nivel, creamos notificación
         if new_level > old_level:
