@@ -7,6 +7,17 @@ class Mission(models.Model):
     xp_reward = models.PositiveIntegerField(default=0)
     is_active = models.BooleanField(default=True)   # Si la misión esta disponible o no
     created_at = models.DateTimeField(auto_now_add=True)
+    type = models.CharField(
+        max_length=30,
+        choices=[
+            ("manual", "Manual"),
+            ("github_commit", "GitHub Commit"),
+            ("github_pr", "GitHub Pull Request"),
+        ],
+        default="manual"
+    )
+
+    metadata = models.JSONField(blank=True, null=True)
 
     def __str__(self):
         return self.title

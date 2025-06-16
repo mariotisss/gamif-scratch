@@ -1,6 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import LeaderboardView, NotificationViewSet
+from .github.views import github_webhook_view
 
 router = DefaultRouter()
 router.register(r'notifications', NotificationViewSet, basename='notification')
@@ -8,6 +9,7 @@ router.register(r'notifications', NotificationViewSet, basename='notification')
 urlpatterns = [
     path('', include(router.urls)),
     path('leaderboard/', LeaderboardView.as_view(), name='leaderboard'),
+    path("github/webhook/", github_webhook_view, name="github-webhook"), # Endpoint para recibir webhooks de GitHub
 ]
 
 
