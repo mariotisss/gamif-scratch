@@ -11,13 +11,20 @@ class Mission(models.Model):
         max_length=30,
         choices=[
             ("manual", "Manual"),
-            ("github_commit", "GitHub Commit"),
-            ("github_pr", "GitHub Pull Request"),
+            ("github_event", "GitHub Event"),
+            # Exensiones futuras a otras plataformas
         ],
         default="manual"
     )
 
-    metadata = models.JSONField(blank=True, null=True)
+    metadata = models.JSONField(blank=True, null=True) # Informacion adicional, como condiciones o tipo
+    '''
+        {
+            "event_type": "commit",
+            "threshold": 3,
+            "period": "daily"
+        }
+    '''
 
     def __str__(self):
         return self.title
