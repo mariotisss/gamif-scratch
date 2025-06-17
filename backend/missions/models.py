@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from datetime import timedelta
 
 class Mission(models.Model):
     title = models.CharField(max_length=100)
@@ -25,6 +26,18 @@ class Mission(models.Model):
             "period": "daily"
         }
     '''
+    # Limite de tiempo para completar la misión (en días)
+    time_limit_days = models.PositiveIntegerField(
+        null=True,
+        blank=True,
+        help_text="Días desde la creación para completar la misión. Dejar vacío si no hay límite."
+    )
+
+    # Calcula la fecha de expiración de la misión
+    def expiration_date(self):
+        if self.time_limit_days is not None:
+            return self.created_at + timedelta(days=self.time_limit_days)
+        return None
 
     def __str__(self):
         return self.title

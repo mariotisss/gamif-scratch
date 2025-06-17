@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django.db.models.functions import TruncDate
 from django.db.models import Count
+from datetime import timedelta, datetime
+
 from .models import Mission, UserMission
 from .serializers import MissionSerializer, CompleteMissionSerializer
 
@@ -46,3 +48,32 @@ class MissionStatsView(APIView):
             .order_by('date')
         )
         return Response(stats, status=status.HTTP_200_OK)
+
+class UserMissionListView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        completed_ids = set(UserMission.objects.filter(user=user).values_list("mission_id", flat=True))
+        missions = Mission.objects.all()
+
+        result = []
+        for m in missions:
+            expiration = m.expiration_date()
+            if m.id in completed_ids:
+                status = "completed"
+            elif m.time_limit_days is not None and m.is_active:
+                status = "available" if datetime.now() < expiration else "expired"
+            else:
+                status = "available" if m.is_active else "expired"
+
+            result.append({
+                "id": m.id,
+                "title": m.title,
+                "description": m.description,
+                "xp_reward": m.xp_reward,
+                "status": status,
+                "expires_at": m.expiration_date() if m.time_limit_days else None,
+            })
+
+        return Response(result)
