@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django.db.models.functions import TruncDate
 from django.db.models import Count
-from datetime import timedelta, datetime
+from django.utils import timezone
 
 from .models import Mission, UserMission
 from .serializers import MissionSerializer, CompleteMissionSerializer
@@ -30,8 +30,8 @@ class CompleteMissionView(APIView):
     def post(self, request):
         serializer = CompleteMissionSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
-            result = serializer.save()  # Completa la misión y actualiza XP
-            return Response(result, status=status.HTTP_200_OK)
+            serializer.save()  # Completa la misión y actualiza XP
+            return Response({"success": True}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class MissionStatsView(APIView):
@@ -63,7 +63,7 @@ class UserMissionListView(APIView):
             if m.id in completed_ids:
                 status = "completed"
             elif m.time_limit_days is not None and m.is_active:
-                status = "available" if datetime.now() < expiration else "expired"
+                status = "available" if timezone.now() < expiration else "expired"
             else:
                 status = "available" if m.is_active else "expired"
 
@@ -72,6 +72,7 @@ class UserMissionListView(APIView):
                 "title": m.title,
                 "description": m.description,
                 "xp_reward": m.xp_reward,
+                "type": m.type,
                 "status": status,
                 "expires_at": m.expiration_date() if m.time_limit_days else None,
             })
