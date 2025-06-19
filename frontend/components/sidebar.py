@@ -3,21 +3,18 @@ import streamlit as st
 from api_client import get_user_profile
 
 def show_sidebar():
-    st.sidebar.title("📋 Navegación")
-    page = st.sidebar.radio("Ir a:", ["app", "misiones", "badges", "teams"])
 
     # Datos del usuario logueado
     if "access_token" in st.session_state:
         profile = get_user_profile(st.session_state["access_token"])
         if "error" not in profile:
-            st.sidebar.markdown("---")
-            st.sidebar.markdown(f"👤 **{profile['username']}**")
-            st.sidebar.markdown(f"⭐ **Nivel**: {profile['level']}")
-            st.sidebar.markdown(f"🏅 **XP**: {profile['xp']}")
-            st.sidebar.markdown(f"🎖️ **Badges**: {profile.get('badges', 0)}")
+            st.sidebar.title("📋 Inventario")
+            st.sidebar.markdown(f"👤  **{profile['username']}**")
+            st.sidebar.markdown(f"⭐  **Nivel**: {profile['level']}")
+            st.sidebar.markdown(f"⚡  **XP**: {profile['xp']}")
+            st.sidebar.markdown(f"🎖️  **Badges**: {profile.get('badges', 0)}")
 
     if st.sidebar.button("Cerrar sesión"):
         st.session_state.clear()
         st.rerun()
 
-    return page
