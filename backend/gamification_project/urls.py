@@ -16,6 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,4 +26,7 @@ urlpatterns = [
     path('api/', include('badges.urls')),  # App de badges
     path('api/', include('teams.urls')), # App de teams
     path('api/', include('analytics.urls')),  # App de analytics
-]
+    
+    path('accounts/', include('allauth.urls')), # URLs de autenticación de allauth
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

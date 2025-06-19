@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Badge, UserBadge, Reward
 
 class BadgeSerializer(serializers.ModelSerializer):
+    icon = serializers.ImageField(required=False, allow_null=True)
     class Meta:
         model = Badge
         fields = '__all__'
