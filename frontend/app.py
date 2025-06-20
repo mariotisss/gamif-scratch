@@ -1,15 +1,18 @@
 import streamlit as st
+import time
 from login import login_form
 from api_client import (
     get_leaderboard,
-    get_user_notifications,
     get_user_mission_stats,
     get_user_profile,
-    read_notification
+    get_user_notifications,
+    delete_notification
 )
 from components.sidebar import show_sidebar
 import pandas as pd
 import plotly.graph_objects as go
+
+
 
 def show_toast(message):
     st.markdown(f"""
@@ -32,7 +35,7 @@ def show_toast(message):
     """, unsafe_allow_html=True)
 
 
-st.set_page_config(page_title="Dashboard", layout="wide")
+st.set_page_config(page_title="Dashboard", page_icon="🎮", layout="wide")
 
 # Protege acceso
 if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
@@ -40,10 +43,8 @@ if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
     st.stop()
 
 # Sidebar persistente con navegación
-page = show_sidebar()
-if page != "app":
-    st.switch_page(f"pages/{page}.py")
-    st.stop()
+show_sidebar()
+
 
 # Estilos CSS
 st.markdown("""
@@ -115,17 +116,19 @@ with col1:
         st.markdown("#### 📬 Notificaciones", unsafe_allow_html=True)
         with st.expander(" ", expanded=True):
             notifs = get_user_notifications(st.session_state["access_token"])
+
             if isinstance(notifs, list) and notifs:
+                # Crear almacenamiento de notificaciones borradas (por ID)
+                if "read_notifications" not in st.session_state:
+                    st.session_state["read_notifications"] = set()
+
                 with st.container():
                     st.markdown('<div style="max-height:300px; overflow-y:auto;">', unsafe_allow_html=True)
-                    # Almacenar IDs de notificaciones leídas en esta sesión
-                    if "read_notifications" not in st.session_state:
-                        st.session_state["read_notifications"] = set()
 
                     for notif in notifs:
                         notif_id = notif["id"]
                         if notif_id in st.session_state["read_notifications"]:
-                            continue  # ya leída
+                            continue  # no mostrar si ya se ha borrado en esta sesión
 
                         col1_, col2_ = st.columns([9, 1])
                         with col1_:
@@ -137,18 +140,22 @@ with col1:
                             """, unsafe_allow_html=True)
 
                         with col2_:
-                            if st.button("✔", key=f"mark_read_{notif_id}"):
-                                success = read_notification(notif_id, st.session_state["access_token"])
+                            if st.button("❌", key=f"delete_{notif_id}"):
+                                from api_client import delete_notification
+                                success = delete_notification(notif_id, st.session_state["access_token"])
                                 if success:
                                     st.session_state["read_notifications"].add(notif_id)
-                                    show_toast("Notificación marcada como leída")
+                                    show_toast("Notificación eliminada")
+                                    time.sleep(0.1)  # da tiempo a mostrar el toast
+                                    st.rerun()  # método interno no documentado (no recomendado, pero funcional)
                                 else:
-                                    st.error("Error al marcar como leída.")
+                                    st.error("No se pudo eliminar la notificación.")
                             st.markdown("</div>", unsafe_allow_html=True)
 
                     st.markdown('</div>', unsafe_allow_html=True)
             else:
                 st.info("No tienes notificaciones aún.")
+
 
 
 # 🏆 Leaderboard
