@@ -58,6 +58,8 @@ for team in all_teams:
             st.info("Ya perteneces a este equipo.")
 
 
+st.markdown("<hr style='border: 0.5px solid #555;'>", unsafe_allow_html=True)
+
 st.subheader("📊 Ranking de equipos")
 
 ranking = get_team_ranking()
