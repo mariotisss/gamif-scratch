@@ -15,8 +15,8 @@ class TeamSerializer(serializers.ModelSerializer):
 
 
 class UserTeamSerializer(serializers.ModelSerializer):
-    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
     team = serializers.PrimaryKeyRelatedField(queryset=Team.objects.all())
+    user = serializers.SlugRelatedField(read_only=True, slug_field="username")
     joined_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
 
     class Meta:
