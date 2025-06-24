@@ -1,12 +1,12 @@
 from django.core.management.base import BaseCommand
 from missions.models import Mission
-from datetime import datetime
+from django.utils import timezone
 
 class Command(BaseCommand):
     help = 'Desactiva automáticamente las misiones que hayan expirado'
 
     def handle(self, *args, **kwargs):
-        now = datetime.now()
+        now = timezone.now()
         expired = Mission.objects.filter(
             is_active=True,
             time_limit_days__isnull=False  # Condición de filtro en una query Django ORM
@@ -21,3 +21,6 @@ class Command(BaseCommand):
                 count += 1
 
         self.stdout.write(self.style.SUCCESS(f"✅ {count} misiones expiradas desactivadas"))
+
+# Para ejecutar el comando usar:
+# python manage.py expire_missions
